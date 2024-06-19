@@ -10,11 +10,11 @@ RUN npm install
 # Copy the source code
 COPY . .
 
-# Install TypeScript globally
-RUN npm install -g typescript
+# Generate Prisma client
+RUN npx prisma generate
 
 # Expose the application port
 EXPOSE 3000
 
-# Start the application with nodemon for hot-reloading
-CMD ["npm", "run", "dev"]
+# Run the migration and seed commands, then start the application with nodemon for hot-reloading
+CMD npx prisma migrate dev --name init && npx prisma migrate deploy && npm run prisma:seed && npm run dev

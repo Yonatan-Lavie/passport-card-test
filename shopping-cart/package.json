@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon -L --watch src -e ts --exec ts-node src/app.ts",
     "build": "tsc",
-    "start": "node build/app.js"
+    "start": "node build/app.js",
+    "prisma:seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
