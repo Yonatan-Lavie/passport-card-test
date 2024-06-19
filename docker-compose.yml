@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  api:
+    build: ./shopping-cart
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./shopping-cart:/usr/src/app
+      - /usr/src/app/node_modules
