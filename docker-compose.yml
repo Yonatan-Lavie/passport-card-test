@@ -4,9 +4,14 @@ services:
     build: ./shopping-cart
     ports:
       - "3000:3000"
+    environment:
+      DATABASE_URL: mysql://root:rootpassword@db:3306/mydatabase
     volumes:
       - ./shopping-cart:/usr/src/app
       - /usr/src/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     image: mysql:8.0
     container_name: mysql_db
