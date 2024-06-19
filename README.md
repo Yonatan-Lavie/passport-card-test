@@ -3,6 +3,12 @@
 ## Description
 This project is a backend system for a basic shopping cart application. It is designed to evaluate skills in building a backend service that allows users to manage their carts. The system is developed using Node.js with TypeScript for the backend and MySQL for the database, with API documentation provided using Postman.
 
+# Clone the repository
+git clone https://github.com/Yonatan-Lavie/passport-card-test
+
+# Navigate to the project directory
+cd passport-card-test
+
 ## Running the Project Locally
 To run the project locally using Docker Compose:
 
