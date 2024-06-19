@@ -7,3 +7,19 @@ services:
     volumes:
       - ./shopping-cart:/usr/src/app
       - /usr/src/app/node_modules
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
