@@ -30,3 +30,10 @@ To run the project locally using Docker Compose:
     # Stop the Docker containers
     docker-compose down
     ```
+
+## Testing the Project with Postman
+To test the project using Postman:
+
+1. Open the Postman application.
+2. Import the Postman collection file provided in the repository named `passport-cart-test.postman_collection.json`. This file contains pre-configured requests to test the API endpoints.
+3. Once imported, you can use the requests in the collection to interact with the running API. Make sure the Docker containers are running before testing.
