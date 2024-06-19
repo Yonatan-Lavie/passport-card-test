@@ -1,0 +1,41 @@
+// Define Prisma JavaScript Client
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+// Define database connection
+datasource db {
+  provider = "mysql"             // Specify MySQL as the database provider
+  url      = env("DATABASE_URL") // Use the DATABASE_URL environment variable for the connection URL
+}
+
+// Define User model
+model User {
+  id       String   @id @default(uuid()) // Primary key, auto-incrementing integer
+  username String   @unique                      // Unique username field
+  password String                             // Password field
+  Cart     Cart[]                               // One-to-many relation with the Cart model
+}
+
+// Define Product model
+model Product {
+  id          String   @id @default(uuid()) // Primary key, auto-incrementing integer
+  sku         String   @unique                      // Unique SKU field
+  price       Float                               // Product price field
+  stock       Int                                  // Stock quantity field
+  expiration  DateTime?                           // Optional expiration date field
+  Cart        Cart[]                               // One-to-many relation with the Cart model
+}
+
+// Define Cart model
+model Cart {
+  id         String   @id @default(uuid()) // Primary key, auto-incrementing integer
+  userId     String                                  // Foreign key to the User model
+  productId  String                                  // Foreign key to the Product model
+  quantity   Int                                  // Quantity of the product in the cart
+  User       User     @relation(fields: [userId], references: [id])  // Relation to the User model
+  Product    Product  @relation(fields: [productId], references: [id]) // Relation to the Product model
+
+  @@unique([userId, productId]) // Unique constraint to prevent duplicate product entries for the same user
+}
