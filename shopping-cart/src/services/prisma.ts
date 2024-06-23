@@ -1,25 +1,35 @@
 import { PrismaClient } from '@prisma/client';
-import { QueryEvent } from '../types';
+import { LogEvent, QueryEvent } from '../types';
 
-
-
+// Instantiate a new PrismaClient with logging configuration
 const prisma = new PrismaClient({
-    log: [
-      { level: 'query', emit: 'event' },
-      { level: 'error', emit: 'event' },
-      { level: 'info', emit: 'stdout' },
-    ],
-  });
-  
-  prisma.$on('query', (e: QueryEvent) => {
-    console.log(`Query: ${e.query}`);
-    console.log(`Params: ${e.params}`);
-    console.log(`Duration: ${e.duration}ms`);
-  });
-  prisma.$on('error', (e: any) => {
-    console.log("\n\nCUSTOM ERROR" + e + "\n\n\n\n");
-    
-  });
+  log: [
+    // Log query events and emit them as events
+    { level: 'query', emit: 'event' },
+    // Log error events and emit them as events
+    { level: 'error', emit: 'event' },
+    // Log informational messages and output them to stdout
+    { level: 'info', emit: 'stdout' },
+  ],
+});
 
+// Event listener for query events
+prisma.$on('query', (e: QueryEvent) => {
+  console.log(
+    `[Query] type: ${e.query} params: ${e.params} duration: ${e.duration}ms`
+  );
+});
 
+// Event listener for error events
+prisma.$on('error', (e: LogEvent) => {
+  console.log(
+    `[Prisma Error] target: ${e.target}, time: ${new Date(
+      e.timestamp
+    ).toLocaleString('he-IL', {
+      timeZone: 'Asia/Jerusalem',
+    })}`
+  );
+});
+
+// Export the configured Prisma client instance
 export default prisma;
